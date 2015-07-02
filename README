@@ -1,0 +1,17 @@
+KNOT protocol library
+
+Copyright (C) Tiago Barros <tiago.barros@cesar.org.br>
+Copyright (C) Claudio Takahasi <claudio.takahasi@cesar.org.br>
+
+Introduction
+============
+
+KNOT protocol library is a lightweight C library built to use minimal CPU
+and memory resources.
+
+Compilation and installation
+============================
+
+In order to compiler the source code you need following software packages:
+	- GCC compiler
+	- GNU C library
