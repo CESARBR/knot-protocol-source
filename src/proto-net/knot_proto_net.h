@@ -21,6 +21,7 @@
 #ifdef ARDUINO
 // If we are on Arduino, we will have only one socket
 #define KNOT_SOCKET_FD_MAX		1
+#include <Arduino.h>
 #elif
 // If we are on a Gateway, we will have 255 sockets
 #define KNOT_SOCKET_FD_MAX		255
