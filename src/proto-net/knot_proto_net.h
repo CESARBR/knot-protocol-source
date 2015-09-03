@@ -17,12 +17,16 @@
 // invalid socket fd
 #define KNOT_SOCKET_FD_INVALID		-1
 
+// net layer return codes
+#define KNOT_NET_ERROR			-1
+#define KNOT_NET_SUCCESS		0
+
 // max number of sockets fd for the network layer
 #ifdef ARDUINO
 // If we are on Arduino, we will have only one socket
 #define KNOT_SOCKET_FD_MAX		1
 #include <Arduino.h>
-#elif
+#else
 // If we are on a Gateway, we will have 255 sockets
 #define KNOT_SOCKET_FD_MAX		255
 #endif
@@ -31,7 +35,7 @@
 // abstraction for a small local network. It has 8-bit addresses
 #define KNOT_NET_ID_NONE		0x00 // Node that doens't have ID
 #define KNOT_NET_ID_MAX			0xF0 // max 240 device nodes
-#define KNOT_NET_ID_GATEWAY1		0xF1 // first gateway ID
+#define KNOT_NET_ID_GATEWAY		0xF1 // first gateway ID
 #define KNOT_NET_ID_GATEWAY_MAX		0xFE // max number of gateways (14)
 					     // This means 3360 (14*240)
 					     // devices in one physical space
@@ -130,14 +134,15 @@ typedef union {
  * by the KNoT platform.
  */
 typedef enum {
-	KNOT_PHY_ETH = 0,
+	KNOT_PHY_SERIAL = 0,
 	KNOT_PHY_NRF24,
 	KNOT_PHY_NRF51,
 	KNOT_PHY_NRF905,
 	KNOT_PHY_RFM69,
+	KNOT_PHY_ETH,
 	KNOT_PHY_ESP8266,
 	KNOT_PHY_ASK,
-	KNOT_PHY_SERIAL
+	KNOT_PHY_MAX
 } knot_phy_t;
 
 /**
@@ -149,12 +154,12 @@ typedef enum {
  */
 typedef enum {
 	KNOT_SOCKET_CLIENT = 0,
-	KNOT_SOCKET_SERVER
+	KNOT_SOCKET_SERVER,
+	KNOT_SOCKET_TYPE_MAX
 } knot_socket_type_t;
 
 /**
  * knot_net_socket() - creates a KNoT socket.
- * @phy:	physical layer (driver) to bbe used for the socket.
  * @my_addr:	the KNoT address that the socket will bound to.
  * @type:	the type of the socket (client or server).
  *
@@ -166,7 +171,7 @@ typedef enum {
  *
  * Return: the file descriptor for the socket created or -1 if any error.
  */
-int knot_net_socket(knot_phy_t phy, uint8_t my_addr, knot_socket_type_t type);
+int knot_net_socket(uint8_t my_addr, knot_socket_type_t type);
 
 /**
  * knot_net_accept() - creates a new socket from server socket new connection.
@@ -228,19 +233,12 @@ int knot_net_send(int socket, uint8_t to_addr, knot_net_msg *msg);
 
 /**
  * knot_net_init() - initializes the KNoT network layer.
+ * @phy:	physical layer (driver) to be used by the network layer.
  *
- * This function initializes the KNoT network layer, setting up all
- * supported physical layer drivers.
+ * This function initializes the KNoT network layer, setting up the
+ * desired physical layer driver.
  * It must be called in the beginning of the program.
  */
-void knot_net_init();
-
-/**
- * knot_net_run() - executes all internal operations for the KNoT network layer.
- *
- * This function executes all internal operations for the KNoT network layer.
- * It must be called in the program main loop.
- */
-void knot_net_run();
+void knot_net_init(knot_phy_t phy);
 
 #endif //KNOT_PROTOCOL_NET_H
