@@ -40,12 +40,17 @@
 #define KNOT_TYPE_ID_COMMAND				0xFFFE
 #define KNOT_TYPE_ID_RESERVED				0xFFFF
 
-// Unity types definitions
+// definition of measurement units
 #define KNOT_UNIT_NOT_APPLICABLE			0x00
 #define KNOT_UNIT_VOLTAGE_V				0x01
+#define KNOT_UNIT_VOLTAGE_MV				0x02
+#define KNOT_UNIT_VOLTAGE_KV				0x03
 #define KNOT_UNIT_CURRENT_A				0x01
+#define KNOT_UNIT_CURRENT_MA				0x02
 #define KNOT_UNIT_RESISTENCE_OHM			0x01
 #define KNOT_UNIT_POWER_W				0x01
+#define KNOT_UNIT_POWER_KW				0x02
+#define KNOT_UNIT_POWER_MW				0x03
 #define KNOT_UNIT_TEMPERATURE_C				0x01
 #define KNOT_UNIT_TEMPERATURE_F				0x02
 #define KNOT_UNIT_TEMPERATURE_K				0x03
@@ -96,5 +101,11 @@
 #define KNOT_UNIT_ENERGY_KWH				0x04
 #define KNOT_UNIT_ENERGY_CAL				0x05
 #define KNOT_UNIT_ENERGY_KCAL				0x06
+
+// definition of value type
+#define KNOT_VALUE_TYPE_INT			0x01
+#define KNOT_VALUE_TYPE_FLOAT	0x02
+#define KNOT_VALUE_TYPE_BOOL		0x03
+#define KNOT_VALUE_TYPE_RAW		0x04
 
 #endif // KNOT_TYPES_H
