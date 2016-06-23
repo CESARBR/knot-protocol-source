@@ -8,9 +8,6 @@
  */
 #include <stdint.h>
 
-#include <knot_types.h>
-#include <knot_proto_net.h>
-
 #ifndef KNOT_PROTOCOL_APP_H
 #define KNOT_PROTOCOL_APP_H
 
