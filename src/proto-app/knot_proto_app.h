@@ -147,7 +147,11 @@ typedef struct __attribute__ ((packed)) {
 	char			uuid[KNOT_PROTOCOL_UUID_LEN];
 } knot_msg_unregister;
 
-typedef knot_msg_unregister knot_msg_authentication;
+typedef struct __attribute__ ((packed)) {
+	knot_msg_header		hdr;
+	char			uuid[KNOT_PROTOCOL_UUID_LEN];
+	char                    token[KNOT_PROTOCOL_TOKEN_LEN];
+} knot_msg_authentication;
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t			data_id;
