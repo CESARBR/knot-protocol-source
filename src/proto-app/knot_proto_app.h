@@ -51,11 +51,13 @@
 #define KNOT_MSG_UNREGISTER_RESP		0x13
 #define KNOT_MSG_AUTH_REQ			0x14
 #define KNOT_MSG_AUTH_RESP			0x15
-// KNoT device config messages (from device)
-#define KNOT_MSG_SCHEMA_START		0x40
-#define KNOT_MSG_SCHEMA			0x41
-#define KNOT_MSG_SCHEMA_END		0x42
-#define KNOT_MSG_SCHEMA_RESP		0x43
+/*
+ * KNoT device config messages (from device)
+ * END flag indicates end of schema transfer.
+ */
+#define KNOT_MSG_SCHEMA			0x40
+#define KNOT_MSG_SCHEMA_FLAG_END	0x01
+#define KNOT_MSG_SCHEMA_RESP		0x44
 // KNoT data sending config messages (from gateway)
 #define KNOT_MSG_GET_INTERVAL		0x50
 #define KNOT_MSG_SET_INTERVAL		0x51
