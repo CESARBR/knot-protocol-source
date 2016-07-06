@@ -142,9 +142,9 @@ typedef struct __attribute__ ((packed)) {
 	char			devName[KNOT_PROTOCOL_DEVICE_NAME_LEN];
 } knot_msg_register;
 
+/* Requirement: authenticated PHY link */
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	char			uuid[KNOT_PROTOCOL_UUID_LEN];
 } knot_msg_unregister;
 
 typedef struct __attribute__ ((packed)) {
