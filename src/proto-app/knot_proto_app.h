@@ -157,7 +157,7 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t				sensor_id;	/* App defined sensor id */
-	uint16_t			data_type;
+	uint16_t			type_id;	/* KNOT_TYPE_ID_* */
 	char				name[KNOT_PROTOCOL_DATA_NAME_LEN];
 } knot_schema;
 
