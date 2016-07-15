@@ -10,4 +10,8 @@
 #ifndef KNOT_LIB_H
 #define KNOT_LIB_H
 
+int knot_value_type_is_valid(uint8_t type);
+
+int knot_schema_is_valid(uint8_t type_id, uint8_t value_type, uint8_t unit);
+
 #endif // KNOT_LIB_H
