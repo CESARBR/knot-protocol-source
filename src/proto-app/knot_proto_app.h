@@ -137,6 +137,7 @@ typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	int8_t				result;
 	char			uuid[KNOT_PROTOCOL_UUID_LEN];
+	char			token[KNOT_PROTOCOL_TOKEN_LEN];
 } knot_msg_credential;
 
 typedef struct __attribute__ ((packed)) {
