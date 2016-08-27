@@ -15,3 +15,8 @@ Compilation and installation
 In order to compiler the source code you need following software packages:
 	- GCC compiler
 	- GNU C library
+
+How to build:
+	./bootstrap-configure
+	make
+	sudo make install
