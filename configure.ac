@@ -1,5 +1,5 @@
 AC_PREREQ(2.60)
-AC_INIT(knot-proto, 0.01)
+AC_INIT(knot-protocol, 0.01)
 
 AM_INIT_AUTOMAKE([silent-rules subdir-objects])
 
@@ -30,7 +30,7 @@ AC_PROG_RANLIB
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
-AC_CONFIG_FILES([ Makefile src/proto-app/Makefile])
+AC_CONFIG_FILES([ Makefile src/Makefile])
 
 AC_SUBST([ARFLAGS], ["cr"])
 

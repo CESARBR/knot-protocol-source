@@ -11,7 +11,7 @@
 #include <errno.h>
 
 #include "knot_types.h"
-#include "knot_lib.h"
+#include "knot_protocol.h"
 
 /* Basic types */
 #define VTYPE_INT	KNOT_VALUE_TYPE_INT

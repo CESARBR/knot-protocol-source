@@ -8,8 +8,8 @@
  */
 #include <stdint.h>
 
-#ifndef KNOT_PROTOCOL_APP_H
-#define KNOT_PROTOCOL_APP_H
+#ifndef KNOT_PROTOCOL_H
+#define KNOT_PROTOCOL_H
 
 #define KNOT_NO_DATA			2
 #define KNOT_DONE		1
@@ -179,4 +179,10 @@ typedef union {
 	uint8_t						msg[KNOT_MSG_MAX_SIZE];
 } knot_msg;
 
-#endif //KNOT_PROTOCOL_APP_H
+
+int knot_value_type_is_valid(uint8_t type);
+
+int knot_schema_is_valid(uint8_t type_id, uint8_t value_type, uint8_t unit);
+
+
+#endif //KNOT_PROTOCOL_H
