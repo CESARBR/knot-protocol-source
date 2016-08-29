@@ -1,13 +1,17 @@
-KNOT protocol library
+KNOT Application layer protocol library
 
-Copyright (C) Tiago Barros <tiago.barros@cesar.org.br>
-Copyright (C) Claudio Takahasi <claudio.takahasi@cesar.org.br>
+Copyright (c) 2015-2016, CESAR.
+All rights reserved.
+
+This software may be modified and distributed under the terms
+of the BSD license. See the LICENSE file for details.
 
 Introduction
 ============
 
-KNOT protocol library is a lightweight C library built to use minimal CPU
-and memory resources.
+KNOT Application layer protocol library is a lightweight C library built to use minimal CPU
+and memory resources. It provides the application layer messages definition for exchanging messages 
+between KNoT Nodes (KNoT Thing Devices), KNoT Gateway and KNoT Apps.
 
 Compilation and installation
 ============================
