@@ -13,12 +13,6 @@
 #include "knot_types.h"
 #include "knot_protocol.h"
 
-/* Basic types */
-#define VTYPE_INT	KNOT_VALUE_TYPE_INT
-#define VTYPE_FLOAT	KNOT_VALUE_TYPE_FLOAT
-#define VTYPE_BOOL	KNOT_VALUE_TYPE_BOOL
-#define VTYPE_RAW	KNOT_VALUE_TYPE_RAW
-
 /* Bitmask to identify used unit */
 #define UNIT_MASK(unit)		(1 << (unit))
 
@@ -31,7 +25,7 @@
 
 #define UNIT_RESISTENCE_MASK	(UNIT_MASK(KNOT_UNIT_RESISTENCE_OHM))
 
-#define UNIT_POWER_MASK		(UNIT_MASK(KNOT_UNIT_POWER_W) |		\
+#define UNIT_POWER_MASK		(UNIT_MASK(KNOT_UNIT_POWER_W) |			\
 					UNIT_MASK( KNOT_UNIT_POWER_KW) |	\
 					UNIT_MASK(KNOT_UNIT_POWER_MW))
 
@@ -49,7 +43,7 @@
 					UNIT_MASK(KNOT_UNIT_TIME_MS) |		\
 					UNIT_MASK(KNOT_UNIT_TIME_US))
 
-#define UNIT_MASS_MASK		(UNIT_MASK(KNOT_UNIT_MASS_KG) |		\
+#define UNIT_MASS_MASK		(UNIT_MASK(KNOT_UNIT_MASS_KG) |			\
 					UNIT_MASK(KNOT_UNIT_MASS_G) |		\
 					UNIT_MASK(KNOT_UNIT_MASS_LB) |		\
 					UNIT_MASK(KNOT_UNIT_MASS_OZ))
@@ -71,7 +65,7 @@
 					UNIT_MASK(KNOT_UNIT_VOLUME_FLOZ) |	\
 					UNIT_MASK(KNOT_UNIT_VOLUME_GAL))
 
-#define UNIT_AREA_MASK		(UNIT_MASK(KNOT_UNIT_AREA_M2) |		\
+#define UNIT_AREA_MASK		(UNIT_MASK(KNOT_UNIT_AREA_M2) |			\
 					UNIT_MASK(KNOT_UNIT_AREA_HA) |		\
 					UNIT_MASK(KNOT_UNIT_AREA_AC))
 
@@ -83,9 +77,9 @@
 
 #define UNIT_LONG_MASK		(UNIT_MASK(KNOT_UNIT_LONGITUDE_DEGREE))
 
-#define UNIT_SPEED_MASK		(UNIT_MASK(KNOT_UNIT_SPEED_MS) | \
-					 UNIT_MASK(KNOT_UNIT_SPEED_CMS) | \
-					 UNIT_MASK(KNOT_UNIT_SPEED_KMH) | \
+#define UNIT_SPEED_MASK		(UNIT_MASK(KNOT_UNIT_SPEED_MS) |		\
+					 UNIT_MASK(KNOT_UNIT_SPEED_CMS) |	\
+					 UNIT_MASK(KNOT_UNIT_SPEED_KMH) |	\
 					 UNIT_MASK(KNOT_UNIT_SPEED_MIH))
 
 #define UNIT_VOLFLOW_MASK	(UNIT_MASK(KNOT_UNIT_VOLUMEFLOW_M3S) |		\
@@ -95,80 +89,91 @@
 					UNIT_MASK(KNOT_UNIT_VOLUMEFLOW_FT3S) |	\
 					UNIT_MASK(KNOT_UNIT_VOLUMEFLOW_GALM))
 
-#define UNIT_ENERGY_MASK	(UNIT_MASK(KNOT_UNIT_ENERGY_J) | \
-					UNIT_MASK(KNOT_UNIT_ENERGY_NM) | \
-					UNIT_MASK(KNOT_UNIT_ENERGY_WH) | \
-					UNIT_MASK(KNOT_UNIT_ENERGY_KWH) | \
-					UNIT_MASK(KNOT_UNIT_ENERGY_CAL) | \
+#define UNIT_ENERGY_MASK	(UNIT_MASK(KNOT_UNIT_ENERGY_J) |		\
+					UNIT_MASK(KNOT_UNIT_ENERGY_NM) |	\
+					UNIT_MASK(KNOT_UNIT_ENERGY_WH) |	\
+					UNIT_MASK(KNOT_UNIT_ENERGY_KWH) |	\
+					UNIT_MASK(KNOT_UNIT_ENERGY_CAL) |	\
 					UNIT_MASK(KNOT_UNIT_ENERGY_KCAL))
 
-static struct schema {
-	uint16_t	type_id;
+#define TYPE_ID_MASK(type)	(type & 0x000F)		
+
+static const struct schema {
 	uint8_t		value_type;
 	uint32_t	unit_mask;
-} schema[]  = {
-	{ KNOT_TYPE_ID_NONE,			VTYPE_RAW, 0xFFFF		},
-	{ KNOT_TYPE_ID_VOLTAGE,			VTYPE_INT, UNIT_VOLTAGE_MASK	},
-	{ KNOT_TYPE_ID_CURRENT,			VTYPE_INT, UNIT_CURRENT_MASK	},
-	{ KNOT_TYPE_ID_RESISTENCE,		VTYPE_INT, UNIT_RESISTENCE_MASK },
-	{ KNOT_TYPE_ID_POWER,			VTYPE_INT, UNIT_POWER_MASK	},
-	{ KNOT_TYPE_ID_TEMPERATURE,		VTYPE_INT, UNIT_TEMP_MASK	},
-	{ KNOT_TYPE_ID_RELATIVE_HUMIDITY,	VTYPE_INT, UNIT_HUM_MASK	},
-	{ KNOT_TYPE_ID_LUMINOSITY,		VTYPE_INT, UNIT_LUM_MASK	},
-	{ KNOT_TYPE_ID_TIME,			VTYPE_INT, UNIT_TIME_MASK	},
-	{ KNOT_TYPE_ID_MASS,			VTYPE_INT, UNIT_MASS_MASK	},
-	{ KNOT_TYPE_ID_PRESSURE,		VTYPE_INT, UNIT_PRESSURE_MASK	},
-	{ KNOT_TYPE_ID_DISTANCE,		VTYPE_INT, UNIT_DISTANCE_MASK	},
-	{ KNOT_TYPE_ID_ANGLE,			VTYPE_FLOAT, UNIT_ANGLE_MASK	},
-	{ KNOT_TYPE_ID_VOLUME,			VTYPE_FLOAT, UNIT_VOL_MASK	},
-	{ KNOT_TYPE_ID_AREA,			VTYPE_FLOAT, UNIT_AREA_MASK	},
-	{ KNOT_TYPE_ID_RAIN,			VTYPE_FLOAT, UNIT_RAIN_MASK	},
-	{ KNOT_TYPE_ID_DENSITY,			VTYPE_FLOAT, UNIT_DENSITY_MASK	},
-	{ KNOT_TYPE_ID_LATITUDE,		VTYPE_FLOAT, UNIT_LAT_MASK	},
-	{ KNOT_TYPE_ID_LONGITUDE,		VTYPE_FLOAT, UNIT_LONG_MASK	},
-	{ KNOT_TYPE_ID_SPEED,			VTYPE_INT,	UNIT_SPEED_MASK },
-	{ KNOT_TYPE_ID_VOLUMEFLOW,		VTYPE_FLOAT, UNIT_VOLFLOW_MASK	},
-	{ KNOT_TYPE_ID_ENERGY,			VTYPE_INT, UNIT_ENERGY_MASK	},
+} basic_types[]  = {
+	{KNOT_VALUE_TYPE_RAW, 0xFFFF			},
+	{KNOT_VALUE_TYPE_INT, UNIT_VOLTAGE_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_CURRENT_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_RESISTENCE_MASK	},
+	{KNOT_VALUE_TYPE_INT, UNIT_POWER_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_TEMP_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_HUM_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_LUM_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_TIME_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_MASS_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_PRESSURE_MASK	},
+	{KNOT_VALUE_TYPE_INT, UNIT_DISTANCE_MASK	},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_ANGLE_MASK		},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_VOL_MASK		},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_AREA_MASK		},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_RAIN_MASK		},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_DENSITY_MASK	},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_LAT_MASK		},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_LONG_MASK		},
+	{KNOT_VALUE_TYPE_INT, UNIT_SPEED_MASK		},
+	{KNOT_VALUE_TYPE_FLOAT, UNIT_VOLFLOW_MASK	},
+	{KNOT_VALUE_TYPE_INT, UNIT_ENERGY_MASK		}
+};
 
-	{ KNOT_TYPE_ID_PRESENCE,		VTYPE_BOOL, 0xFFFF		},
-	{ KNOT_TYPE_ID_SWITCH,			VTYPE_BOOL, 0xFFFF		},
-	{ KNOT_TYPE_ID_COMMAND,			VTYPE_RAW, 0xFFFF		},
-	{ KNOT_TYPE_ID_RESERVED,		VTYPE_RAW, 0xFFFF		},
+static const uint8_t logic_types[]  = {
+	KNOT_VALUE_TYPE_BOOL,			// KNOT_TYPE_ID_PRESENCE
+	KNOT_VALUE_TYPE_BOOL,			// KNOT_TYPE_ID_SWITCH
+	KNOT_VALUE_TYPE_RAW			// KNOT_TYPE_ID_COMMAND
 };
 
 int knot_value_type_is_valid(uint8_t type)
 {
-	if (type < KNOT_VALUE_TYPE_MIN || type > KNOT_VALUE_TYPE_MAX)
-		return ERANGE;
+	if (type >= KNOT_VALUE_TYPE_MIN || type < KNOT_VALUE_TYPE_MAX)
+		return KNOT_SUCCESS;
 
-	return 0;
+	return KNOT_INVALID_DATA;
 }
 
-int knot_schema_is_valid(uint8_t type_id, uint8_t value_type, uint8_t unit)
+int knot_type_id_is_basic(uint16_t type_id)
 {
-	int i;
+	if (type_id >= KNOT_TYPE_ID_BASIC_MIN && type_id < KNOT_TYPE_ID_BASIC_MAX)
+		return KNOT_SUCCESS;
 
+	return KNOT_INVALID_DATA;
+}
+
+int knot_type_id_is_logic(uint16_t type_id)
+{
+	if (type_id >= KNOT_TYPE_ID_LOGIC_MIN && type_id < KNOT_TYPE_ID_LOGIC_MAX)
+		return KNOT_SUCCESS;
+
+	return KNOT_INVALID_DATA;
+}
+
+int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
+{
 	/* int/float/bool/raw ? */
-	if (knot_value_type_is_valid(value_type))
-		return EINVAL;
+	if (knot_value_type_is_valid(value_type) == KNOT_SUCCESS) {
 
-	/* Not expecting more than 32 diff unit for the same type */
-	if (unit > 31)
-		return EINVAL;
+		/* Verify basic type IDs */
+		if (knot_type_id_is_basic(type_id) == KNOT_SUCCESS) {
+			if (basic_types[type_id].value_type == value_type && 
+			    basic_types[type_id].unit_mask & UNIT_MASK(unit))
+				return KNOT_SUCCESS;
 
-	for (i = 0; schema[i].type_id != KNOT_TYPE_ID_RESERVED; i++) {
-
-		if (schema[i].type_id != type_id)
-			continue;
-
-		if (schema[i].value_type != value_type)
-			return EINVAL;
-
-		if (schema[i].unit_mask & UNIT_MASK(unit))
-			return 0;
-		else
-			return EINVAL;
+		/* Verify logic type IDs */
+		} else if (knot_type_id_is_logic(type_id) == KNOT_SUCCESS) {
+			if (logic_types[TYPE_ID_MASK(type_id)] == value_type)
+				return KNOT_SUCCESS;
+		}
 	}
 
-	return EINVAL;
+	return KNOT_INVALID_SCHEMA;
 }
+

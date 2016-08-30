@@ -11,25 +11,25 @@
 #ifndef KNOT_PROTOCOL_H
 #define KNOT_PROTOCOL_H
 
-#define KNOT_NO_DATA			2
-#define KNOT_DONE		1
+#define KNOT_NO_DATA				2
+#define KNOT_DONE				1
 #define KNOT_SUCCESS				0
-#define KNOT_ERROR_UNKNOWN -1
-#define KNOT_INVALID_DEVICE		-2
-#define KNOT_INVALID_DATA	-3
-#define KNOT_INVALID_DATA_RAW	-4
-#define KNOT_DEVICE_NOT_FOUND		-5
-#define KNOT_GW_FAILURE		-6
-#define KNOT_CLOUD_FAILURE		-7
-#define KNOT_CLOUD_OFFLINE	-8
-#define KNOT_INVALID_UUID				-9
-#define KNOT_INVALID_UUID_CLOUD	-10
+#define KNOT_ERROR_UNKNOWN			-1
+#define KNOT_INVALID_DEVICE			-2
+#define KNOT_INVALID_DATA			-3
+#define KNOT_INVALID_DATA_RAW			-4
+#define KNOT_DEVICE_NOT_FOUND			-5
+#define KNOT_GW_FAILURE				-6
+#define KNOT_CLOUD_FAILURE			-7
+#define KNOT_CLOUD_OFFLINE			-8
+#define KNOT_INVALID_UUID			-9
+#define KNOT_INVALID_UUID_CLOUD			-10
 #define KNOT_REGISTER_INVALID_DEVICENAME	-11
-#define KNOT_INVALID_SCHEMA -12
-#define KNOT_SCHEMA_NOT_FOUND	-13
-#define KNOT_SCHEMA_EMPTY	-14
-#define KNOT_INVALID_CREDENTIAL -15
-#define KNOT_CREDENTIAL_UNAUTHORIZED -16
+#define KNOT_INVALID_SCHEMA			-12
+#define KNOT_SCHEMA_NOT_FOUND			-13
+#define KNOT_SCHEMA_EMPTY			-14
+#define KNOT_INVALID_CREDENTIAL			-15
+#define KNOT_CREDENTIAL_UNAUTHORIZED		-16
 
 // Each KNoT Device or user has a unique ID and token as identification
 // mechanism
@@ -55,95 +55,95 @@
  * KNoT device config messages (from device)
  * END flag indicates end of schema transfer.
  */
-#define KNOT_MSG_SCHEMA			0x40
-#define KNOT_MSG_SCHEMA_FLAG_END	0x01
-#define KNOT_MSG_SCHEMA_RESP		0x44
+#define KNOT_MSG_SCHEMA				0x40
+#define KNOT_MSG_SCHEMA_FLAG_END		0x01
+#define KNOT_MSG_SCHEMA_RESP			0x44
 // KNoT data sending config messages (from gateway)
-#define KNOT_MSG_GET_INTERVAL		0x50
-#define KNOT_MSG_SET_INTERVAL		0x51
-#define KNOT_MSG_GET_THRESHOLD		0x52
-#define KNOT_MSG_SET_THRESHOLD		0x53
+#define KNOT_MSG_GET_INTERVAL			0x50
+#define KNOT_MSG_SET_INTERVAL			0x51
+#define KNOT_MSG_GET_THRESHOLD			0x52
+#define KNOT_MSG_SET_THRESHOLD			0x53
 // KNoT request messages (from gateway)
 #define KNOT_MSG_GET_DATA			0x30
 #define KNOT_MSG_SET_DATA			0x31
 #define KNOT_MSG_GET_COMMAND			0x32
 #define KNOT_MSG_SET_COMMAND			0x33
 // KNoT response messages (from device)
-#define KNOT_MSG_DATA					0x20
-#define KNOT_MSG_DATA_RESP		0x21
-#define KNOT_MSG_COMMAND		0x22
+#define KNOT_MSG_DATA				0x20
+#define KNOT_MSG_DATA_RESP			0x21
+#define KNOT_MSG_COMMAND			0x22
 #define KNOT_MSG_INTERVAL			0x24
-#define KNOT_MSG_THRESHOLD	0x26
+#define KNOT_MSG_THRESHOLD			0x26
+// KNoT event flags passed by config messages
+#define KNOT_EVT_FLAG_NONE			0x00
+#define KNOT_EVT_FLAG_TIME			0x01
+#define KNOT_EVT_FLAG_LOWER_THRESHOLD		0x02
+#define KNOT_EVT_FLAG_UPPER_THRESHOLD		0x04
+#define KNOT_EVT_FLAG_CHANGE			0x08
+#define KNOT_EVT_FLAG_UNREGISTERED		0x80
 
-#define KNOT_MSG_MAX_SIZE		KNOT_NET_PAYLOAD_SIZE
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t			type;
 	uint8_t			payload_len;
 } knot_msg_header;
 
-typedef struct __attribute__ ((packed)) {
-	uint8_t			sensor_id;	/* App define sensor id */
-	uint8_t			unit;		/* KNOT_UNIT_* */
-	uint8_t			value_type;	/* KNOT_VALUE_TYPE_* */
-} knot_data_header;
-
-#define KNOT_DATA_MAX_SIZE	(KNOT_MSG_MAX_SIZE - sizeof(knot_msg_header))
-#define KNOT_DATA_RAW_SIZE	(KNOT_DATA_MAX_SIZE - sizeof(knot_data_header))
+#define KNOT_DATA_RAW_SIZE			16  // 16 bytes for any command. Can be increased if needed.
+#define KNOT_DATA_MSG_SIZE			(KNOT_DATA_RAW_SIZE + sizeof(uint8_t)) // size of sensor id
 
 typedef struct __attribute__ ((packed)) {
-	knot_data_header	hdr;
-	uint8_t				value[KNOT_DATA_RAW_SIZE];
+	uint8_t			sensor_id;	// App defined sensor id 
+	uint8_t			value[KNOT_DATA_RAW_SIZE];
 } knot_data_raw;
 
 typedef struct __attribute__ ((packed)) {
-	knot_data_header	hdr;
+	uint8_t			sensor_id;	// App defined sensor id 
 	int32_t			multiplier;
 	int32_t			value_int;
-	uint32_t			value_dec;
+	uint32_t		value_dec;
 } knot_data_float;
 
 typedef struct __attribute__ ((packed)) {
-	knot_data_header	hdr;
+	uint8_t			sensor_id;	// App defined sensor id 
 	int32_t			multiplier;
 	int32_t			value;
 } knot_data_int;
 
 typedef struct __attribute__ ((packed)) {
-	knot_data_header	hdr;
+	uint8_t			sensor_id;	// App defined sensor id 
 	uint8_t			value;
 } knot_data_bool;
 
 typedef union __attribute__ ((packed)) {
-	knot_data_header	hdr;
+	uint8_t			sensor_id;	// App defined sensor id 
 	knot_data_float		float_k;
-	knot_data_int			int_k;
+	knot_data_int		int_k;
 	knot_data_bool		bool_k;
-	knot_data_raw			raw_k;
-	uint8_t						data[KNOT_DATA_MAX_SIZE];
+	knot_data_raw		raw_k;
+	uint8_t			data[KNOT_DATA_MSG_SIZE];
 } knot_data;
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	int8_t				result;
+	int8_t			result;
 } knot_msg_result;
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	knot_data						payload;
+	knot_data		payload;
 } knot_msg_data;
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	int8_t				result;
+	int8_t			result;
 	char			uuid[KNOT_PROTOCOL_UUID_LEN];
 	char			token[KNOT_PROTOCOL_TOKEN_LEN];
-} knot_msg_credential;
+} knot_msg_credential; // hdr + 40 + 36 bytes
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	char			devName[KNOT_PROTOCOL_DEVICE_NAME_LEN];
-} knot_msg_register;
+} knot_msg_register; // hdr + 64 bytes
 
 /* Requirement: authenticated PHY link */
 typedef struct __attribute__ ((packed)) {
@@ -153,36 +153,55 @@ typedef struct __attribute__ ((packed)) {
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	char			uuid[KNOT_PROTOCOL_UUID_LEN];
-	char                    token[KNOT_PROTOCOL_TOKEN_LEN];
+	char			token[KNOT_PROTOCOL_TOKEN_LEN];
 } knot_msg_authentication;
 
 typedef struct __attribute__ ((packed)) {
-	uint8_t				sensor_id;	/* App defined sensor id */
-	uint16_t			type_id;	/* KNOT_TYPE_ID_* */
-	char				name[KNOT_PROTOCOL_DATA_NAME_LEN];
-} knot_schema;
+	uint8_t			sensor_id;	// App defined sensor id 
+	uint8_t			value_type;	// KNOT_VALUE_TYPE_* (int, float, bool, raw)
+	uint8_t			unit;		// KNOT_UNIT_* 
+	uint16_t		type_id;	// KNOT_TYPE_ID_* 
+	char			name[KNOT_PROTOCOL_DATA_NAME_LEN];
+} knot_schema; // 69 bytes
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	knot_schema		schema;
-} knot_msg_config;
+} knot_msg_schema;
 
-typedef union {
+#define KNOT_MSG_SIZE		(sizeof(knot_msg_header) + sizeof(knot_msg_credential))  // must be greater than max structure size defined above
+
+typedef union __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	knot_msg_result			action;
+	knot_msg_result		action;
 	knot_msg_data		data;
 	knot_msg_credential	cred;
 	knot_msg_register	reg;
 	knot_msg_unregister	unreg;
 	knot_msg_authentication	auth;
-	knot_msg_config		config;
-	uint8_t						msg[KNOT_MSG_MAX_SIZE];
+	knot_msg_schema		schema;
+	uint8_t			msg[KNOT_MSG_SIZE];
 } knot_msg;
 
-
+/*
+ * Helper function to validate the value type
+ */
 int knot_value_type_is_valid(uint8_t type);
 
-int knot_schema_is_valid(uint8_t type_id, uint8_t value_type, uint8_t unit);
+/*
+ * Helper function to verify if type_id is in basic range
+ */
+int knot_type_id_is_basic(uint16_t type_id);
+
+/*
+ * Helper function to verify if type_id is in logic range
+ */
+int knot_type_id_is_logic(uint16_t type_id);
+
+/*
+ * Helper function to validate the schema
+ */
+int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit);
 
 
 #endif //KNOT_PROTOCOL_H
