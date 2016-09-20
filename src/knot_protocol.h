@@ -185,7 +185,7 @@ typedef union __attribute__ ((packed)) {
 	knot_msg_authentication	auth;
 	knot_msg_schema		schema;
 	knot_msg_config		config;
-	uint8_t			msg[KNOT_MSG_SIZE];
+	uint8_t			buffer[KNOT_MSG_SIZE];
 } knot_msg;
 
 /*
