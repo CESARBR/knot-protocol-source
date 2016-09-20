@@ -149,7 +149,6 @@ typedef struct __attribute__ ((packed)) {
 } knot_msg_authentication;
 
 typedef struct __attribute__ ((packed)) {
-	uint8_t			sensor_id;	// App defined sensor id 
 	uint8_t			value_type;	// KNOT_VALUE_TYPE_* (int, float, bool, raw)
 	uint8_t			unit;		// KNOT_UNIT_* 
 	uint16_t		type_id;	// KNOT_TYPE_ID_* 
@@ -158,7 +157,8 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	knot_schema		schema;
+	uint8_t			sensor_id;	// App defined sensor id
+	knot_schema		values;
 } knot_msg_schema;
 
 #define KNOT_MSG_SIZE		(sizeof(knot_msg_header) + sizeof(knot_msg_credential))  // must be greater than max structure size defined above
