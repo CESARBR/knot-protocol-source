@@ -59,10 +59,8 @@
 #define KNOT_MSG_SCHEMA_FLAG_END		0x01
 #define KNOT_MSG_SCHEMA_RESP			0x44
 // KNoT data sending config messages (from gateway)
-#define KNOT_MSG_GET_INTERVAL			0x50
-#define KNOT_MSG_SET_INTERVAL			0x51
-#define KNOT_MSG_GET_THRESHOLD			0x52
-#define KNOT_MSG_SET_THRESHOLD			0x53
+#define KNOT_MSG_GET_CONFIG			0x50
+#define KNOT_MSG_SET_CONFIG			0x51
 // KNoT request messages (from gateway)
 #define KNOT_MSG_GET_DATA			0x30
 #define KNOT_MSG_SET_DATA			0x31
@@ -72,8 +70,9 @@
 #define KNOT_MSG_DATA				0x20
 #define KNOT_MSG_DATA_RESP			0x21
 #define KNOT_MSG_COMMAND			0x22
-#define KNOT_MSG_INTERVAL			0x24
-#define KNOT_MSG_THRESHOLD			0x26
+#define KNOT_MSG_CONFIG				0x24
+#define KNOT_MSG_CONFIG_RESP			0x25
+
 // KNoT event flags passed by config messages
 #define KNOT_EVT_FLAG_NONE			0x00
 #define KNOT_EVT_FLAG_TIME			0x01
@@ -126,6 +125,19 @@ typedef struct __attribute__ ((packed)) {
 } knot_msg_data;
 
 typedef struct __attribute__ ((packed)) {
+	uint8_t			event_flags;
+	uint16_t		time_sec;
+	knot_value_types	lower_limit;
+	knot_value_types	upper_limit;
+} knot_config;
+
+typedef struct __attribute__ ((packed)) {
+	knot_msg_header		hdr;
+	uint8_t			sensor_id;	// App defined sensor id
+	knot_config		values;
+} knot_msg_config; // hdr + 1 + 37 bytes
+
+typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	int8_t			result;
 	char			uuid[KNOT_PROTOCOL_UUID_LEN];
@@ -172,6 +184,7 @@ typedef union __attribute__ ((packed)) {
 	knot_msg_unregister	unreg;
 	knot_msg_authentication	auth;
 	knot_msg_schema		schema;
+	knot_msg_config		config;
 	uint8_t			msg[KNOT_MSG_SIZE];
 } knot_msg;
 
