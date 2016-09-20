@@ -82,46 +82,13 @@
 #define KNOT_EVT_FLAG_CHANGE			0x08
 #define KNOT_EVT_FLAG_UNREGISTERED		0x80
 
+#define KNOT_DATA_RAW_SIZE			16 // 16 bytes for any command
+						   // Can be increased if needed
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t			type;
 	uint8_t			payload_len;
 } knot_msg_header;
-
-#define KNOT_DATA_RAW_SIZE			16  // 16 bytes for any command. Can be increased if needed.
-#define KNOT_DATA_MSG_SIZE			(KNOT_DATA_RAW_SIZE + sizeof(uint8_t)) // size of sensor id
-
-typedef struct __attribute__ ((packed)) {
-	uint8_t			sensor_id;	// App defined sensor id 
-	uint8_t			value[KNOT_DATA_RAW_SIZE];
-} knot_data_raw;
-
-typedef struct __attribute__ ((packed)) {
-	uint8_t			sensor_id;	// App defined sensor id 
-	int32_t			multiplier;
-	int32_t			value_int;
-	uint32_t		value_dec;
-} knot_data_float;
-
-typedef struct __attribute__ ((packed)) {
-	uint8_t			sensor_id;	// App defined sensor id 
-	int32_t			multiplier;
-	int32_t			value;
-} knot_data_int;
-
-typedef struct __attribute__ ((packed)) {
-	uint8_t			sensor_id;	// App defined sensor id 
-	uint8_t			value;
-} knot_data_bool;
-
-typedef union __attribute__ ((packed)) {
-	uint8_t			sensor_id;	// App defined sensor id 
-	knot_data_float		float_k;
-	knot_data_int		int_k;
-	knot_data_bool		bool_k;
-	knot_data_raw		raw_k;
-	uint8_t			data[KNOT_DATA_MSG_SIZE];
-} knot_data;
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
@@ -129,7 +96,32 @@ typedef struct __attribute__ ((packed)) {
 } knot_msg_result;
 
 typedef struct __attribute__ ((packed)) {
+	int32_t			multiplier;
+	int32_t			value_int;
+	uint32_t		value_dec;
+} knot_value_type_float;
+
+typedef struct __attribute__ ((packed)) {
+	int32_t			multiplier;
+	int32_t			value;
+} knot_value_type_int;
+
+typedef uint8_t knot_value_type_bool;
+
+typedef union __attribute__ ((packed)) {
+	knot_value_type_int	val_i;
+	knot_value_type_float	val_f;
+	knot_value_type_bool	val_b;
+} knot_value_types;
+
+typedef union __attribute__ ((packed)) {
+	knot_value_types	values;
+	uint8_t			raw[KNOT_DATA_RAW_SIZE];
+} knot_data;
+
+typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
+	uint8_t			sensor_id;	// App defined sensor id
 	knot_data		payload;
 } knot_msg_data;
 
