@@ -56,8 +56,9 @@
  * END flag indicates end of schema transfer.
  */
 #define KNOT_MSG_SCHEMA				0x40
-#define KNOT_MSG_SCHEMA_FLAG_END		0x01
-#define KNOT_MSG_SCHEMA_RESP			0x44
+#define KNOT_MSG_SCHEMA_RESP			0x41
+#define KNOT_MSG_SCHEMA_END			0x42
+#define KNOT_MSG_SCHEMA_END_RESP		0x43
 // KNoT data sending config messages (from gateway)
 #define KNOT_MSG_GET_CONFIG			0x50
 #define KNOT_MSG_SET_CONFIG			0x51
@@ -162,8 +163,8 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t			value_type;	// KNOT_VALUE_TYPE_* (int, float, bool, raw)
-	uint8_t			unit;		// KNOT_UNIT_* 
-	uint16_t		type_id;	// KNOT_TYPE_ID_* 
+	uint8_t			unit;		// KNOT_UNIT_*
+	uint16_t		type_id;	// KNOT_TYPE_ID_*
 	char			name[KNOT_PROTOCOL_DATA_NAME_LEN];
 } knot_schema; // 69 bytes
 
