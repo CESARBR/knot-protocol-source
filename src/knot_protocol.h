@@ -96,6 +96,11 @@ typedef struct __attribute__ ((packed)) {
 } knot_msg_result;
 
 typedef struct __attribute__ ((packed)) {
+	knot_msg_header		hdr;
+	uint8_t			sensor_id;	// App defined sensor id
+} knot_msg_item;
+
+typedef struct __attribute__ ((packed)) {
 	int32_t			multiplier;
 	int32_t			value_int;
 	uint32_t		value_dec;
@@ -179,6 +184,7 @@ typedef struct __attribute__ ((packed)) {
 typedef union __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	knot_msg_result		action;
+	knot_msg_item		item;
 	knot_msg_data		data;
 	knot_msg_credential	cred;
 	knot_msg_register	reg;
