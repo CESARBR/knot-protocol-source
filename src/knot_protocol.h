@@ -81,6 +81,10 @@
 #define KNOT_EVT_FLAG_UPPER_THRESHOLD		0x04
 #define KNOT_EVT_FLAG_CHANGE			0x08
 #define KNOT_EVT_FLAG_UNREGISTERED		0x80
+#define KNOT_EVENT_FLAG_MAX			(KNOT_EVT_FLAG_TIME |\
+						KNOT_EVT_FLAG_LOWER_THRESHOLD |\
+						KNOT_EVT_FLAG_UPPER_THRESHOLD |\
+						KNOT_EVT_FLAG_CHANGE)
 
 #define KNOT_DATA_RAW_SIZE			16 // 16 bytes for any command
 						   // Can be increased if needed
