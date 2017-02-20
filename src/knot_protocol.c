@@ -96,7 +96,7 @@
 					UNIT_MASK(KNOT_UNIT_ENERGY_CAL) |	\
 					UNIT_MASK(KNOT_UNIT_ENERGY_KCAL))
 
-#define TYPE_ID_MASK(type)	(type & 0x000F)		
+#define TYPE_ID_MASK(type)	(type & 0x000F)
 
 static const struct schema {
 	uint8_t		value_type;
@@ -142,7 +142,7 @@ int knot_value_type_is_valid(uint8_t type)
 
 int knot_type_id_is_basic(uint16_t type_id)
 {
-	if (type_id >= KNOT_TYPE_ID_BASIC_MIN && type_id < KNOT_TYPE_ID_BASIC_MAX)
+	if (type_id < KNOT_TYPE_ID_BASIC_MAX)
 		return KNOT_SUCCESS;
 
 	return KNOT_INVALID_DATA;
@@ -163,7 +163,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 
 		/* Verify basic type IDs */
 		if (knot_type_id_is_basic(type_id) == KNOT_SUCCESS) {
-			if (basic_types[type_id].value_type == value_type && 
+			if (basic_types[type_id].value_type == value_type &&
 			    basic_types[type_id].unit_mask & UNIT_MASK(unit))
 				return KNOT_SUCCESS;
 

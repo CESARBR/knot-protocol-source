@@ -1,19 +1,19 @@
-/* 
+/*
  * Copyright (c) 2015, CESAR.
  * All rights reserved.
  *
  * This software may be modified and distributed under the terms
  * of the BSD license. See the LICENSE file for details.
  *
- */ 
- 
+ */
+
 #ifndef KNOT_TYPES_H
 #define KNOT_TYPES_H
 
-/* 
+/*
  * This file defines the semantic for KNoT data types and unities
- * used by KNoT data sources. 
- *  
+ * used by KNoT data sources.
+ *
  */
 
 // definition of invalid sensor id
@@ -43,8 +43,6 @@
 #define KNOT_TYPE_ID_VOLUMEFLOW				0x0014
 #define KNOT_TYPE_ID_ENERGY				0x0015
 
-// MIN TypeID for basic units
-#define KNOT_TYPE_ID_BASIC_MIN				(KNOT_TYPE_ID_NONE)
 // MAX TypeID for basic units
 #define KNOT_TYPE_ID_BASIC_MAX				(KNOT_TYPE_ID_ENERGY+1)
 
