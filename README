@@ -19,8 +19,13 @@ Compilation and installation
 In order to compiler the source code you need following software packages:
 	- GCC compiler
 	- GNU C library
+dependencies:
+	automake
+	libtool
+
+How to install dependencies:
+	sudo apt-get install automake libtool
 
 How to build:
 	./bootstrap-configure
 	make
-	sudo make install
