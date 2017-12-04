@@ -156,6 +156,7 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
+	uint64_t		id;	/* Device id: mac or user defined */
 	char			devName[KNOT_PROTOCOL_DEVICE_NAME_LEN];
 } knot_msg_register; // hdr + 64 bytes
 
