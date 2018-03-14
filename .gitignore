@@ -22,4 +22,10 @@ src/Makefile
 src/Makefile.in
 src/knot_protocol.o
 src/libknotprotocol.a
+src/libknotprotocol.la
+libknotprotocol.la
+src/knot_protocol.lo
+src/knotprotocol.pc
+src/.libs
+libs/
 stamp-h1
