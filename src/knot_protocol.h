@@ -121,24 +121,20 @@ typedef union __attribute__ ((packed)) {
 	knot_value_type_int	val_i;
 	knot_value_type_float	val_f;
 	knot_value_type_bool	val_b;
-} knot_value_types;
-
-typedef union __attribute__ ((packed)) {
-	knot_value_types	values;
 	uint8_t			raw[KNOT_DATA_RAW_SIZE];
-} knot_data;
+} knot_value_type;
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	uint8_t			sensor_id;	// App defined sensor id
-	knot_data		payload;
+	knot_value_type		payload;
 } knot_msg_data;
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t			event_flags;
 	uint16_t		time_sec;
-	knot_value_types	lower_limit;
-	knot_value_types	upper_limit;
+	knot_value_type		lower_limit;
+	knot_value_type		upper_limit;
 } knot_config;
 
 typedef struct __attribute__ ((packed)) {
@@ -224,7 +220,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit);
  * Helper function to validate the config
  */
 int knot_config_is_valid(uint8_t event_flags, uint16_t time_sec,
-		knot_value_types *lower_limit, knot_value_types *upper_limit);
+		knot_value_type *lower_limit, knot_value_type *upper_limit);
 
 
 #endif //KNOT_PROTOCOL_H

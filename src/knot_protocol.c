@@ -178,7 +178,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 }
 
 int knot_config_is_valid(uint8_t event_flags, uint16_t time_sec,
-		knot_value_types *lower_limit, knot_value_types *upper_limit)
+		knot_value_type *lower_limit, knot_value_type *upper_limit)
 {
 
 	int diff_int, diff_dec;
