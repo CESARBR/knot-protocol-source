@@ -56,6 +56,14 @@
 // MAX TypeID for logic units
 #define KNOT_TYPE_ID_LOGIC_MAX				(KNOT_TYPE_ID_COMMAND+1)
 
+// TypeIDs for generic units
+#define KNOT_TYPE_ID_ANALOG				0xFF10
+
+// MIN TypeID for generic units
+#define KNOT_TYPE_ID_GENERIC_MIN			(KNOT_TYPE_ID_ANALOG)
+// MAX TypeID for generic units
+#define KNOT_TYPE_ID_GENERIC_MAX			(KNOT_TYPE_ID_ANALOG+1)
+
 #define KNOT_TYPE_ID_INVALID				0xFFFF
 
 // definition of measurement units

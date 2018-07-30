@@ -132,6 +132,10 @@ static const uint8_t logic_types[]  = {
 	KNOT_VALUE_TYPE_RAW			// KNOT_TYPE_ID_COMMAND
 };
 
+static const uint8_t generic_types[] = {
+	KNOT_VALUE_TYPE_INT			// KNOT_TYPE_ID_ANALOG
+};
+
 int knot_value_type_is_valid(uint8_t type)
 {
 	if (type >= KNOT_VALUE_TYPE_MIN || type < KNOT_VALUE_TYPE_MAX)
@@ -150,7 +154,17 @@ int knot_type_id_is_basic(uint16_t type_id)
 
 int knot_type_id_is_logic(uint16_t type_id)
 {
-	if (type_id >= KNOT_TYPE_ID_LOGIC_MIN && type_id < KNOT_TYPE_ID_LOGIC_MAX)
+	if (type_id >= KNOT_TYPE_ID_LOGIC_MIN &&
+	    type_id < KNOT_TYPE_ID_LOGIC_MAX)
+		return KNOT_SUCCESS;
+
+	return KNOT_INVALID_DATA;
+}
+
+int knot_type_id_is_generic(uint16_t type_id)
+{
+	if (type_id >= KNOT_TYPE_ID_GENERIC_MIN &&
+	    type_id < KNOT_TYPE_ID_GENERIC_MAX)
 		return KNOT_SUCCESS;
 
 	return KNOT_INVALID_DATA;
@@ -170,6 +184,9 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 		/* Verify logic type IDs */
 		} else if (knot_type_id_is_logic(type_id) == KNOT_SUCCESS) {
 			if (logic_types[TYPE_ID_MASK(type_id)] == value_type)
+				return KNOT_SUCCESS;
+		} else if (knot_type_id_is_generic(type_id) == KNOT_SUCCESS) {
+			if (generic_types[TYPE_ID_MASK(type_id)] == value_type)
 				return KNOT_SUCCESS;
 		}
 	}
