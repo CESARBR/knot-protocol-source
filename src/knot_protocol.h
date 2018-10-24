@@ -37,8 +37,6 @@
 #define KNOT_PROTOCOL_UUID_LEN			36
 // A human readable name for each device
 #define KNOT_PROTOCOL_DEVICE_NAME_LEN		64
-// A human readint8_table name for each data source/sink in the device
-#define KNOT_PROTOCOL_DATA_NAME_LEN		64
 
 #define KNOT_PROTOCOL_DATA_ID_MAX		0xFE
 #define KNOT_PROTOCOL_DATA_ID_NA		0xFF
@@ -174,8 +172,6 @@ typedef struct __attribute__ ((packed)) {
 	knot_schema		values;
 } knot_msg_schema;
 
-#define KNOT_MSG_SIZE		(sizeof(knot_msg_header) + sizeof(knot_msg_credential))  // must be greater than max structure size defined above
-
 typedef union __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	knot_msg_result		action;
@@ -187,7 +183,6 @@ typedef union __attribute__ ((packed)) {
 	knot_msg_authentication	auth;
 	knot_msg_schema		schema;
 	knot_msg_config		config;
-	uint8_t			buffer[KNOT_MSG_SIZE];
 } knot_msg;
 
 /*
