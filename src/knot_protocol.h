@@ -20,11 +20,6 @@
 // mechanism
 #define KNOT_PROTOCOL_TOKEN_LEN			40
 #define KNOT_PROTOCOL_UUID_LEN			36
-// A human readable name for each device
-#define KNOT_PROTOCOL_DEVICE_NAME_LEN		64
-
-#define KNOT_PROTOCOL_DATA_ID_MAX		0xFE
-#define KNOT_PROTOCOL_DATA_ID_NA		0xFF
 
 // KNoT connect/register messages (from device)
 #define KNOT_MSG_REG_REQ			0x10
@@ -62,9 +57,6 @@
 						KNOT_EVT_FLAG_UPPER_THRESHOLD |\
 						KNOT_EVT_FLAG_CHANGE)
 
-#define KNOT_DATA_RAW_SIZE			16 // 16 bytes for any command
-						   // Can be increased if needed
-
 typedef struct __attribute__ ((packed)) {
 	uint8_t			type;
 	uint8_t			payload_len;
@@ -87,6 +79,7 @@ typedef int32_t knot_value_type_int;
 
 typedef uint8_t knot_value_type_bool;
 
+#define KNOT_DATA_RAW_SIZE			16 // 16 bytes for any command
 typedef union __attribute__ ((packed)) {
 	knot_value_type_int	val_i;
 	knot_value_type_float	val_f;
@@ -125,6 +118,7 @@ typedef struct __attribute__ ((packed)) {
 	char			token[KNOT_PROTOCOL_TOKEN_LEN];
 } knot_msg_credential; // hdr + 40 + 36 bytes
 
+#define KNOT_PROTOCOL_DEVICE_NAME_LEN		64
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	uint64_t		id;	/* Device id: mac or user defined */
