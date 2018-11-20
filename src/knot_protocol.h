@@ -13,8 +13,7 @@
 
 #define KNOT_ERR_INVALID			-1
 #define KNOT_ERR_PERM				-2
-#define KNOT_ERR_SCHEMA_EMPTY			-3
-#define KNOT_ERR_CLOUD_FAILURE			-4
+#define KNOT_ERR_CLOUD_FAILURE			-3
 
 // Each KNoT Device or user has a unique ID and token as identification
 // mechanism
