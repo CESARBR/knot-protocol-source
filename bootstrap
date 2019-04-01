@@ -1,8 +1,12 @@
 #!/bin/sh
 
+case `uname` in
+	Darwin*) cmd_libtool="glibtoolize --automake --copy --force" ;;
+	 *)	 cmd_libtool="libtoolize --automake --copy --force"
+esac
+
 aclocal && \
     autoheader && \
-	libtoolize --automake --copy --force && \
+	${cmd_libtool} && \
 	    automake --add-missing --copy && \
 		autoconf
-
