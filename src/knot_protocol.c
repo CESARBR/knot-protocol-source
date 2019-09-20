@@ -138,7 +138,7 @@ static const uint8_t generic_types[] = {
 
 int knot_value_type_is_valid(uint8_t type)
 {
-	if (type >= KNOT_VALUE_TYPE_MIN || type < KNOT_VALUE_TYPE_MAX)
+	if (type >= KNOT_VALUE_TYPE_MIN && type < KNOT_VALUE_TYPE_MAX)
 		return 0;
 
 	return KNOT_ERR_INVALID;
