@@ -42,9 +42,10 @@
 #define KNOT_TYPE_ID_SPEED				0x0013
 #define KNOT_TYPE_ID_VOLUMEFLOW				0x0014
 #define KNOT_TYPE_ID_ENERGY				0x0015
+#define KNOT_TYPE_ID_ACCELERATION			0x0016
 
 // MAX TypeID for basic units
-#define KNOT_TYPE_ID_BASIC_MAX				(KNOT_TYPE_ID_ENERGY+1)
+#define KNOT_TYPE_ID_BASIC_MAX				(KNOT_TYPE_ID_ACCELERATION+1)
 
 // TypeIDs for logical units
 #define KNOT_TYPE_ID_PRESENCE				0xFFF0
@@ -127,6 +128,7 @@
 #define KNOT_UNIT_ENERGY_KWH				0x04
 #define KNOT_UNIT_ENERGY_CAL				0x05
 #define KNOT_UNIT_ENERGY_KCAL				0x06
+#define KNOT_UNIT_ACCELERATION_MS2			0X01
 
 // definition of value type
 #define KNOT_VALUE_TYPE_INT				0x01
