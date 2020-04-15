@@ -78,12 +78,21 @@ typedef int32_t knot_value_type_int;
 
 typedef uint8_t knot_value_type_bool;
 
+typedef int64_t knot_value_type_int64;
+
+typedef uint32_t knot_value_type_uint;
+
+typedef uint64_t knot_value_type_uint64;
+
 #define KNOT_DATA_RAW_SIZE			16 // 16 bytes for any command
 typedef union __attribute__ ((packed)) {
 	knot_value_type_int	val_i;
 	knot_value_type_float	val_f;
 	knot_value_type_bool	val_b;
 	uint8_t			raw[KNOT_DATA_RAW_SIZE];
+	knot_value_type_int64	val_i64;
+	knot_value_type_uint	val_u;
+	knot_value_type_uint64	val_u64;
 } knot_value_type;
 
 /*
