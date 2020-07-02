@@ -98,42 +98,29 @@
 
 #define TYPE_ID_MASK(type)	(type & 0x000F)
 
-static const struct schema {
-	uint8_t		value_type;
-	uint32_t	unit_mask;
-} basic_types[]  = {
-	{KNOT_VALUE_TYPE_RAW, 0xFFFF			},
-	{KNOT_VALUE_TYPE_INT, UNIT_VOLTAGE_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_CURRENT_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_RESISTANCE_MASK	},
-	{KNOT_VALUE_TYPE_INT, UNIT_POWER_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_TEMP_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_HUM_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_LUM_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_TIME_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_MASS_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_PRESSURE_MASK	},
-	{KNOT_VALUE_TYPE_INT, UNIT_DISTANCE_MASK	},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_ANGLE_MASK		},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_VOL_MASK		},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_AREA_MASK		},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_RAIN_MASK		},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_DENSITY_MASK	},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_LAT_MASK		},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_LONG_MASK		},
-	{KNOT_VALUE_TYPE_INT, UNIT_SPEED_MASK		},
-	{KNOT_VALUE_TYPE_FLOAT, UNIT_VOLFLOW_MASK	},
-	{KNOT_VALUE_TYPE_INT, UNIT_ENERGY_MASK		}
-};
-
-static const uint8_t logic_types[]  = {
-	KNOT_VALUE_TYPE_BOOL,			// KNOT_TYPE_ID_PRESENCE
-	KNOT_VALUE_TYPE_BOOL,			// KNOT_TYPE_ID_SWITCH
-	KNOT_VALUE_TYPE_RAW			// KNOT_TYPE_ID_COMMAND
-};
-
-static const uint8_t generic_types[] = {
-	KNOT_VALUE_TYPE_INT			// KNOT_TYPE_ID_ANALOG
+static const uint32_t basic_types[] = {
+	0xFFFF,
+	UNIT_VOLTAGE_MASK,
+	UNIT_CURRENT_MASK,
+	UNIT_RESISTANCE_MASK,
+	UNIT_POWER_MASK,
+	UNIT_TEMP_MASK,
+	UNIT_HUM_MASK,
+	UNIT_LUM_MASK,
+	UNIT_TIME_MASK,
+	UNIT_MASS_MASK,
+	UNIT_PRESSURE_MASK,
+	UNIT_DISTANCE_MASK,
+	UNIT_ANGLE_MASK,
+	UNIT_VOL_MASK,
+	UNIT_AREA_MASK,
+	UNIT_RAIN_MASK,
+	UNIT_DENSITY_MASK,
+	UNIT_LAT_MASK,
+	UNIT_LONG_MASK,
+	UNIT_SPEED_MASK,
+	UNIT_VOLFLOW_MASK,
+	UNIT_ENERGY_MASK
 };
 
 int knot_value_type_is_valid(uint8_t type)
@@ -172,21 +159,20 @@ int knot_type_id_is_generic(uint16_t type_id)
 
 int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 {
-	/* int/float/bool/raw ? */
+	/* int/float/bool/raw/int64/uint/uint64 ? */
 	if (knot_value_type_is_valid(value_type) == 0) {
 
 		/* Verify basic type IDs */
 		if (knot_type_id_is_basic(type_id) == 0) {
-			if (basic_types[type_id].value_type == value_type &&
-			    basic_types[type_id].unit_mask & UNIT_MASK(unit))
+			if (basic_types[type_id] & UNIT_MASK(unit))
 				return 0;
 
 		/* Verify logic type IDs */
 		} else if (knot_type_id_is_logic(type_id) == 0) {
-			if (logic_types[TYPE_ID_MASK(type_id)] == value_type)
+			if (unit == KNOT_UNIT_NOT_APPLICABLE)
 				return 0;
 		} else if (knot_type_id_is_generic(type_id) == 0) {
-			if (generic_types[TYPE_ID_MASK(type_id)] == value_type)
+			if (unit == KNOT_UNIT_NOT_APPLICABLE)
 				return 0;
 		}
 	}
