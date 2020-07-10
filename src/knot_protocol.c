@@ -251,6 +251,30 @@ int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
 				 */
 				return KNOT_ERR_INVALID;
 			break;
+		case KNOT_VALUE_TYPE_INT64:
+			if (upper_limit->val_i64 < lower_limit->val_i64)
+				/*
+				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
+				 * KNOT_INVALID_CONFIG in new protocol
+				 */
+				return KNOT_ERR_INVALID;
+			break;
+		case KNOT_VALUE_TYPE_UINT:
+			if (upper_limit->val_u < lower_limit->val_u)
+				/*
+				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
+				 * KNOT_INVALID_CONFIG in new protocol
+				 */
+				return KNOT_ERR_INVALID;
+			break;
+		case KNOT_VALUE_TYPE_UINT64:
+			if (upper_limit->val_u64 < lower_limit->val_u64)
+				/*
+				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
+				 * KNOT_INVALID_CONFIG in new protocol
+				 */
+				return KNOT_ERR_INVALID;
+			break;
 		default:
 			/*
 			 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
