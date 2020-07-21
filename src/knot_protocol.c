@@ -148,15 +148,6 @@ int knot_type_id_is_logic(uint16_t type_id)
 	return KNOT_ERR_INVALID;
 }
 
-int knot_type_id_is_generic(uint16_t type_id)
-{
-	if (type_id >= KNOT_TYPE_ID_GENERIC_MIN &&
-	    type_id < KNOT_TYPE_ID_GENERIC_MAX)
-		return 0;
-
-	return KNOT_ERR_INVALID;
-}
-
 int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 {
 	/* int/float/bool/raw/int64/uint/uint64 ? */
@@ -171,8 +162,8 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 		} else if (knot_type_id_is_logic(type_id) == 0) {
 			if (unit == KNOT_UNIT_NOT_APPLICABLE)
 				return 0;
-		} else if (knot_type_id_is_generic(type_id) == 0) {
-			if (unit == KNOT_UNIT_NOT_APPLICABLE)
+		} else if (type_id == KNOT_TYPE_ID_GENERIC) {
+			if (unit == KNOT_UNIT_GENERIC)
 				return 0;
 		}
 	}

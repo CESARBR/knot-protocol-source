@@ -56,13 +56,8 @@
 // MAX TypeID for logic units
 #define KNOT_TYPE_ID_LOGIC_MAX				(KNOT_TYPE_ID_COMMAND+1)
 
-// TypeIDs for generic units
-#define KNOT_TYPE_ID_ANALOG				0xFF10
-
-// MIN TypeID for generic units
-#define KNOT_TYPE_ID_GENERIC_MIN			(KNOT_TYPE_ID_ANALOG)
-// MAX TypeID for generic units
-#define KNOT_TYPE_ID_GENERIC_MAX			(KNOT_TYPE_ID_ANALOG+1)
+// TypeID for generic units
+#define KNOT_TYPE_ID_GENERIC				0xFF10
 
 #define KNOT_TYPE_ID_INVALID				0xFFFF
 
@@ -127,6 +122,7 @@
 #define KNOT_UNIT_ENERGY_KWH				0x04
 #define KNOT_UNIT_ENERGY_CAL				0x05
 #define KNOT_UNIT_ENERGY_KCAL				0x06
+#define KNOT_UNIT_GENERIC				0x01
 
 // definition of value type
 #define KNOT_VALUE_TYPE_INT				0x01
