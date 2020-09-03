@@ -171,7 +171,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 	return KNOT_ERR_INVALID;
 }
 
-int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
+int knot_event_is_valid(uint8_t event_flags, uint8_t value_type,
 			 uint16_t time_sec, const knot_value_type *lower_limit,
 			 const knot_value_type *upper_limit)
 {
@@ -180,8 +180,8 @@ int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
 	if ((event_flags | KNOT_EVT_FLAG_NONE) &&
 		!(event_flags & KNOT_EVENT_FLAG_MAX))
 		/*
-		 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-		 * KNOT_INVALID_CONFIG in new protocol
+		 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+		 * KNOT_INVALID_EVENT in new protocol
 		 */
 		return KNOT_ERR_INVALID;
 
@@ -189,15 +189,15 @@ int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
 	if (event_flags & KNOT_EVT_FLAG_TIME) {
 		if (time_sec == 0)
 			/*
-			 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-			 * KNOT_INVALID_CONFIG in new protocol
+			 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+			 * KNOT_INVALID_EVENT in new protocol
 			 */
 			return KNOT_ERR_INVALID;
 	} else {
 		if (time_sec > 0)
 			/*
-			 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-			 * KNOT_INVALID_CONFIG in new protocol
+			 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+			 * KNOT_INVALID_EVENT in new protocol
 			 */
 			return KNOT_ERR_INVALID;
 	}
@@ -208,8 +208,8 @@ int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
 			value_type == KNOT_VALUE_TYPE_BOOL ||
 			value_type == KNOT_VALUE_TYPE_RAW))
 		/*
-		 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-		 * KNOT_INVALID_CONFIG in new protocol
+		 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+		 * KNOT_INVALID_EVENT in new protocol
 		 */
 		return KNOT_ERR_INVALID;
 	if (event_flags & KNOT_EVT_FLAG_UPPER_THRESHOLD &&
@@ -217,8 +217,8 @@ int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
 			value_type == KNOT_VALUE_TYPE_BOOL ||
 			value_type == KNOT_VALUE_TYPE_RAW))
 		/*
-		 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-		 * KNOT_INVALID_CONFIG in new protocol
+		 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+		 * KNOT_INVALID_EVENT in new protocol
 		 */
 		return KNOT_ERR_INVALID;
 
@@ -229,47 +229,47 @@ int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
 		case KNOT_VALUE_TYPE_INT:
 			if( (upper_limit->val_i - lower_limit->val_i) < 0)
 				/*
-				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-				 * KNOT_INVALID_CONFIG in new protocol
+				 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+				 * KNOT_INVALID_EVENT in new protocol
 				 */
 				return KNOT_ERR_INVALID;
 			break;
 		case KNOT_VALUE_TYPE_FLOAT:
 			if( (upper_limit->val_f - lower_limit->val_f) < 0)
 				/*
-				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-				 * KNOT_INVALID_CONFIG in new protocol
+				 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+				 * KNOT_INVALID_EVENT in new protocol
 				 */
 				return KNOT_ERR_INVALID;
 			break;
 		case KNOT_VALUE_TYPE_INT64:
 			if (upper_limit->val_i64 < lower_limit->val_i64)
 				/*
-				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-				 * KNOT_INVALID_CONFIG in new protocol
+				 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+				 * KNOT_INVALID_EVENT in new protocol
 				 */
 				return KNOT_ERR_INVALID;
 			break;
 		case KNOT_VALUE_TYPE_UINT:
 			if (upper_limit->val_u < lower_limit->val_u)
 				/*
-				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-				 * KNOT_INVALID_CONFIG in new protocol
+				 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+				 * KNOT_INVALID_EVENT in new protocol
 				 */
 				return KNOT_ERR_INVALID;
 			break;
 		case KNOT_VALUE_TYPE_UINT64:
 			if (upper_limit->val_u64 < lower_limit->val_u64)
 				/*
-				 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-				 * KNOT_INVALID_CONFIG in new protocol
+				 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+				 * KNOT_INVALID_EVENT in new protocol
 				 */
 				return KNOT_ERR_INVALID;
 			break;
 		default:
 			/*
-			 * TODO: DEFINE KNOT_CONFIG ERRORS IN PROTOCOL
-			 * KNOT_INVALID_CONFIG in new protocol
+			 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
+			 * KNOT_INVALID_EVENT in new protocol
 			 */
 			return KNOT_ERR_INVALID;
 		}

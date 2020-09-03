@@ -44,7 +44,7 @@
 #define KNOT_MSG_POLL_DATA_REQ			0x30
 #define KNOT_MSG_POLL_DATA_RSP			0x31
 
-// KNoT event flags passed by config messages
+// KNoT event flags passed by event messages
 #define KNOT_EVT_FLAG_NONE			0x00
 #define KNOT_EVT_FLAG_TIME			0x01
 #define KNOT_EVT_FLAG_LOWER_THRESHOLD		0x02
@@ -107,19 +107,6 @@ typedef struct __attribute__ ((packed)) {
 } knot_msg_data;
 
 typedef struct __attribute__ ((packed)) {
-	uint8_t			event_flags;
-	uint16_t		time_sec;
-	knot_value_type		lower_limit;
-	knot_value_type		upper_limit;
-} knot_config;
-
-typedef struct __attribute__ ((packed)) {
-	knot_msg_header		hdr;
-	uint8_t			sensor_id;	// App defined sensor id
-	knot_config		values;
-} knot_msg_config; // hdr + 1 + 37 bytes
-
-typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	int8_t			result;
 	char			uuid[KNOT_PROTOCOL_UUID_LEN];
@@ -144,6 +131,13 @@ typedef struct __attribute__ ((packed)) {
 	char			token[KNOT_PROTOCOL_TOKEN_LEN];
 } knot_msg_authentication;
 
+typedef struct __attribute__ ((packed)) {
+	uint8_t			event_flags;
+	uint16_t		time_sec;
+	knot_value_type		lower_limit;
+	knot_value_type		upper_limit;
+} knot_event;
+
 #define KNOT_PROTOCOL_DATA_NAME_LEN		23
 typedef struct __attribute__ ((packed)) {
 	uint8_t			value_type;	// KNOT_VALUE_TYPE_* (int, float, bool, raw)
@@ -155,8 +149,9 @@ typedef struct __attribute__ ((packed)) {
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
 	uint8_t			sensor_id;	// App defined sensor id
-	knot_schema		values;
-} knot_msg_schema;
+	knot_schema		schema;
+	knot_event		event;
+} knot_msg_config;
 
 typedef union __attribute__ ((packed)) {
 	knot_msg_header		hdr;
@@ -167,7 +162,6 @@ typedef union __attribute__ ((packed)) {
 	knot_msg_register	reg;
 	knot_msg_unregister	unreg;
 	knot_msg_authentication	auth;
-	knot_msg_schema		schema;
 	knot_msg_config		config;
 } knot_msg;
 
@@ -194,7 +188,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit);
 /*
  * Helper function to validate the config
  */
-int knot_config_is_valid(uint8_t event_flags, uint8_t value_type,
+int knot_event_is_valid(uint8_t event_flags, uint8_t value_type,
 		uint16_t time_sec, const knot_value_type *lower_limit,
 		 const knot_value_type *upper_limit);
 
