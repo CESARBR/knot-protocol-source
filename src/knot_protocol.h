@@ -171,6 +171,12 @@ typedef union __attribute__ ((packed)) {
 int knot_value_type_is_valid(uint8_t type);
 
 /*
+ * Helper function to assign threshold limit
+ */
+int knot_value_assign_limit(int value_type, knot_value_type value,
+			    knot_value_type *limit);
+
+/*
  * Helper function to verify if type_id is in basic range
  */
 int knot_type_id_is_basic(uint16_t type_id);

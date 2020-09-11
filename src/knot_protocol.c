@@ -131,6 +131,36 @@ int knot_value_type_is_valid(uint8_t type)
 	return KNOT_ERR_INVALID;
 }
 
+int knot_value_assign_limit(int value_type, knot_value_type value,
+			    knot_value_type *limit)
+{
+	switch (value_type) {
+	case KNOT_VALUE_TYPE_INT:
+		limit->val_i = value.val_i;
+		break;
+	case KNOT_VALUE_TYPE_FLOAT:
+		limit->val_f = value.val_f;
+		break;
+	case KNOT_VALUE_TYPE_INT64:
+		limit->val_i64 = value.val_i64;
+		break;
+	case KNOT_VALUE_TYPE_UINT:
+		limit->val_u = value.val_u;
+		break;
+	case KNOT_VALUE_TYPE_UINT64:
+		limit->val_u64 = value.val_u64;
+		break;
+	case KNOT_VALUE_TYPE_BOOL:
+		/* TODO: Implement support for assigning limits to bool value */
+	case KNOT_VALUE_TYPE_RAW:
+		/* Storage doesn't give support to raw */
+	default:
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
 int knot_type_id_is_basic(uint16_t type_id)
 {
 	if (type_id < KNOT_TYPE_ID_BASIC_MAX)
