@@ -202,7 +202,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit)
 }
 
 int knot_event_is_valid(uint8_t event_flags, uint8_t value_type,
-			 uint16_t time_sec, const knot_value_type *lower_limit,
+			 const knot_value_type *lower_limit,
 			 const knot_value_type *upper_limit)
 {
 
@@ -214,23 +214,6 @@ int knot_event_is_valid(uint8_t event_flags, uint8_t value_type,
 		 * KNOT_INVALID_EVENT in new protocol
 		 */
 		return KNOT_ERR_INVALID;
-
-	/* Check consistency of time_sec */
-	if (event_flags & KNOT_EVT_FLAG_TIME) {
-		if (time_sec == 0)
-			/*
-			 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
-			 * KNOT_INVALID_EVENT in new protocol
-			 */
-			return KNOT_ERR_INVALID;
-	} else {
-		if (time_sec > 0)
-			/*
-			 * TODO: DEFINE KNOT_EVENT ERRORS IN PROTOCOL
-			 * KNOT_INVALID_EVENT in new protocol
-			 */
-			return KNOT_ERR_INVALID;
-	}
 
 	/* Check consistency of limits */
 	if (event_flags & KNOT_EVT_FLAG_LOWER_THRESHOLD &&
