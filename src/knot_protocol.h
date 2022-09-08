@@ -46,13 +46,11 @@
 
 // KNoT event flags passed by event messages
 #define KNOT_EVT_FLAG_NONE			0x00
-#define KNOT_EVT_FLAG_TIME			0x01
-#define KNOT_EVT_FLAG_LOWER_THRESHOLD		0x02
-#define KNOT_EVT_FLAG_UPPER_THRESHOLD		0x04
-#define KNOT_EVT_FLAG_CHANGE			0x08
+#define KNOT_EVT_FLAG_LOWER_THRESHOLD		0x01
+#define KNOT_EVT_FLAG_UPPER_THRESHOLD		0x02
+#define KNOT_EVT_FLAG_CHANGE			0x04
 #define KNOT_EVT_FLAG_UNREGISTERED		0x80
-#define KNOT_EVENT_FLAG_MAX			(KNOT_EVT_FLAG_TIME |\
-						KNOT_EVT_FLAG_LOWER_THRESHOLD |\
+#define KNOT_EVENT_FLAG_MAX			(KNOT_EVT_FLAG_LOWER_THRESHOLD |\
 						KNOT_EVT_FLAG_UPPER_THRESHOLD |\
 						KNOT_EVT_FLAG_CHANGE)
 
@@ -133,7 +131,6 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	uint8_t			event_flags;
-	uint16_t		time_sec;
 	knot_value_type		lower_limit;
 	knot_value_type		upper_limit;
 } knot_event;
@@ -195,7 +192,7 @@ int knot_schema_is_valid(uint16_t type_id, uint8_t value_type, uint8_t unit);
  * Helper function to validate the config
  */
 int knot_event_is_valid(uint8_t event_flags, uint8_t value_type,
-		uint16_t time_sec, const knot_value_type *lower_limit,
+		 const knot_value_type *lower_limit,
 		 const knot_value_type *upper_limit);
 
 
