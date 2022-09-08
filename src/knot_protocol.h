@@ -66,7 +66,7 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	uint8_t			sensor_id;	// App defined sensor id
+	int			sensor_id;	// App defined sensor id
 } knot_msg_item;
 
 /* Considering the IEEE 754 single-precision floating-point Standard */
@@ -100,7 +100,7 @@ typedef union __attribute__ ((packed)) {
  */
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	uint8_t			sensor_id;	// App defined sensor id
+	int			sensor_id;	// App defined sensor id
 	knot_value_type		payload;
 } knot_msg_data;
 
@@ -145,7 +145,7 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
 	knot_msg_header		hdr;
-	uint8_t			sensor_id;	// App defined sensor id
+	int			sensor_id;	// App defined sensor id
 	knot_schema		schema;
 	knot_event		event;
 } knot_msg_config;
