@@ -80,6 +80,8 @@ typedef struct __attribute__ ((packed)) {
 /* Considering the IEEE 754 single-precision floating-point Standard */
 typedef float knot_value_type_float;
 
+typedef double knot_value_type_double;
+
 typedef int32_t knot_value_type_int;
 
 typedef uint8_t knot_value_type_bool;
@@ -96,6 +98,7 @@ typedef union __attribute__ ((packed)) {
 	knot_value_type_float	val_f;
 	knot_value_type_bool	val_b;
 	uint8_t			raw[KNOT_DATA_RAW_SIZE];
+	knot_value_type_double  val_d;
 	knot_value_type_int64	val_i64;
 	knot_value_type_uint	val_u;
 	knot_value_type_uint64	val_u64;
@@ -145,7 +148,7 @@ typedef struct __attribute__ ((packed)) {
 
 #define KNOT_PROTOCOL_DATA_NAME_LEN		23
 typedef struct __attribute__ ((packed)) {
-	uint8_t			value_type;	// KNOT_VALUE_TYPE_* (int, float, bool, raw)
+	uint8_t			value_type;	// KNOT_VALUE_TYPE_* (int, double, float, bool, raw)
 	uint8_t			unit;		// KNOT_UNIT_*
 	uint16_t		type_id;	// KNOT_TYPE_ID_*
 	char			name[KNOT_PROTOCOL_DATA_NAME_LEN];
